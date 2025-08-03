@@ -7,19 +7,14 @@ export default {
   ],
    theme: {
     extend: {
-      colors: {
-        brown: {
-          50: '#fdf7f2',
-          100: '#f4eae2',
-          200: '#e5d3c4',
-          300: '#d1b49b',
-          400: '#b78e6e',
-          500: '#a2704f',
-          600: '#855334',
-          700: '#6d4128',
-          800: '#5a3621',
-          900: '#4b2d1b',
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: 0, transform: 'translateY(10px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
         },
+      },
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out',
       },
     },
   },

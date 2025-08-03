@@ -1,106 +1,91 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import {
+    FiBox,
+    FiBarChart2,
+    FiBell,
+    FiSmartphone,
+} from "react-icons/fi";
+import FAQSection from "../components/FAQSection";
 
-const faqData = [
+const features = [
     {
-        question: 'Is the translator free to use?',
-        answer: 'Yes! All features including voice input, translation, and history are free to use.',
+        icon: <FiBox className="w-6 h-6 text-blue-600" />,
+        label: "Inventory Management",
+        desc: "Add, edit, delete, and view inventory items.",
     },
     {
-        question: 'Which languages are supported?',
-        answer: 'We support a wide range of languages including English, Spanish, French, Arabic, Chinese, and more.',
+        icon: <FiBarChart2 className="w-6 h-6 text-blue-600" />,
+        label: "Dashboard Analytics",
+        desc: "Get insights into your inventory with charts and metrics.",
     },
     {
-        question: 'Does it work offline?',
-        answer: 'Currently, you need an internet connection to fetch translations and use voice features.',
+        icon: <FiBell className="w-6 h-6 text-blue-600" />,
+        label: "Low Stock Alerts",
+        desc: "Receive notifications when stock levels are low.",
     },
     {
-        question: 'Is my data stored?',
-        answer: 'Your translation history is stored locally in your browser and never sent to any server.',
+        icon: <FiSmartphone className="w-6 h-6 text-blue-600" />,
+        label: "Responsive Design",
+        desc: "Access your inventory from any device.",
     },
 ];
 
+
 const About = () => {
-    const [activeIndex, setActiveIndex] = useState(null);
-
-    const toggleFAQ = (index) => {
-        setActiveIndex(index === activeIndex ? null : index);
-    };
-
     return (
-        <div className="min-h-screen bg-white dark:bg-[#1a120b] text-[#3e2f23] dark:text-white transition-colors duration-300 px-6 py-20">
-            <div className="md:px-24 lg:px-40 px-6 mx-auto space-y-12">
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h2 className="text-3xl font-bold mb-4">About Us</h2>
-                    <p className="text-lg">
-                        Our translator project was built with love for language learners, travelers, and global citizens.
-                        We believe that communication should never be a barrier.
+        <>
+            {/* About Intro */}
+            <section className="py-16 pt-20">
+                <div className="max-w-5xl mx-auto px-4">
+                    <h1 className="text-4xl font-bold mb-4 animate-fade-in">
+                        About Small Business Inventory Tracker
+                    </h1>
+                    <p className="text-xl text-gray-700 mb-8 animate-fade-in">
+                        Small Business Inventory Tracker is a web-based application designed to help small businesses manage their inventory efficiently. With features like real-time tracking, low stock alerts, and dashboard analytics, our app makes inventory management simple and effective.
                     </p>
-                </motion.section>
+                </div>
+            </section>
 
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
-                    <p className="text-lg">
-                        We aim to make translation fast, accessible, and inclusive.
-                        Our goal is to empower people to speak and understand each other
-                        across borders and languages, with a focus on simplicity and accessibility.
+            {/* Why We Built This */}
+            <section className="py-16 bg-gray-100">
+                <div className="max-w-5xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-6">Why We Built This</h2>
+                    <p className="text-xl text-gray-700">
+                        Managing inventory can be a challenge for small businesses, often leading to overstocking, stockouts, or inefficient use of resources. Our app provides real-time tracking, low stock alerts, and analytics to help businesses optimize their inventory levels and reduce costs.
                     </p>
-                </motion.section>
+                </div>
+            </section>
 
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-                    <ul className="list-disc list-inside space-y-3 text-lg">
-                        <li>🎙️ Speak into the mic to auto-detect your voice and language.</li>
-                        <li>💬 Type a message and instantly translate it into your target language.</li>
-                        <li>🔊 Listen to translations spoken aloud in a natural voice.</li>
-                        <li>📜 View past translations and listen again from the history page.</li>
-                    </ul>
-                </motion.section>
-
-                <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h2 className="text-3xl font-bold mb-6">FAQs</h2>
-                    <div className="space-y-4">
-                        {faqData.map((faq, index) => (
-                            <div
-                                key={index}
-                                className="border border-[#d6c3b3] dark:border-[#3e2f23] rounded-lg"
-                            >
-                                <button
-                                    onClick={() => toggleFAQ(index)}
-                                    className="w-full text-left px-4 py-3 font-semibold flex justify-between items-center focus:outline-none"
-                                >
-                                    {faq.question}
-                                    <span className="ml-2">
-                                        {activeIndex === index ? '−' : '+'}
-                                    </span>
-                                </button>
-                                {activeIndex === index && (
-                                    <div className="px-4 pb-4 text-base text-[#555] dark:text-[#ccc]">
-                                        {faq.answer}
-                                    </div>
-                                )}
-                            </div>
+            {/* Features */}
+            <section className="py-16">
+                <div className="max-w-5xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-8">Features</h2>
+                    <ul className="space-y-6">
+                        {features.map((feature, index) => (
+                            <li key={index} className="flex items-start gap-4">
+                                <span className="mt-1">{feature.icon}</span>
+                                <div>
+                                    <h3 className="text-xl font-semibold">{feature.label}</h3>
+                                    <p className="text-gray-600">{feature.desc}</p>
+                                </div>
+                            </li>
                         ))}
-                    </div>
-                </motion.section>
-            </div>
-        </div>
+                    </ul>
+                </div>
+            </section>
+
+            {/* Mission */}
+            <section className="py-16 bg-gray-100">
+                <div className="max-w-5xl mx-auto px-4">
+                    <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
+                    <p className="text-xl text-gray-700">
+                        To empower small businesses with tools that simplify inventory management, allowing them to focus on growing their business.
+                    </p>
+                </div>
+            </section>
+
+            <FAQSection />
+        </>
     );
 };
 

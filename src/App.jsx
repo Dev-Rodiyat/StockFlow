@@ -2,8 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
-import Translator from './pages/Translator';
-import History from './pages/History';
+import Dashboard from './pages/Dashboard';
+import Inventory from './pages/Inventory';
+import InventoryDetails from './pages/InventoryDetails';
+import AddItemForm from './pages/AddItemForm';
 
 export default function App() {
   return (
@@ -12,8 +14,10 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/translate" element={<Translator />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/add-item" element={<AddItemForm />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/inventory/:id" element={<InventoryDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
