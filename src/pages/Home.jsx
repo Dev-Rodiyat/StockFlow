@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Package, Bell, BarChart2, Smartphone } from "lucide-react";
+import { Package, Bell, BarChart2, Smartphone, Clock } from "lucide-react";
 
 const features = [
   {
@@ -22,6 +22,24 @@ const features = [
     icon: <Smartphone className="w-12 h-12 text-blue-500 mb-4" />,
     title: "Mobile-Friendly Interface",
     description: "Manage your inventory on the go with our responsive design.",
+  },
+];
+
+const howItWorks = [
+  {
+    icon: <Package className="w-12 h-12 text-blue-500 mb-4" />,
+    title: "Add Inventory",
+    description: "Easily input your products with details like name, quantity, and category.",
+  },
+  {
+    icon: <Clock className="w-12 h-12 text-blue-500 mb-4" />,
+    title: "Track in Real-Time",
+    description: "Monitor stock levels and updates as they happen with live tracking.",
+  },
+  {
+    icon: <BarChart2 className="w-12 h-12 text-blue-500 mb-4" />,
+    title: "Get Insights",
+    description: "Analyze trends and optimize your inventory with powerful analytics.",
   },
 ];
 
@@ -126,6 +144,28 @@ const Home = () => {
       <section
         className="py-20 bg-gradient-to-b from-gray-100 to-blue-100 min-h-[400px]"
         ref={(el) => (sectionRefs.current[1] = el)}
+      >
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {howItWorks.map((step, index) => (
+              <div
+                key={index}
+                className="bg-white/70 backdrop-blur-md border border-gray-100/50 p-6 rounded-3xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 text-center"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                {step.icon}
+                <h3 className="text-xl font-semibold mb-3 text-gray-900">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="py-20 bg-gradient-to-b from-gray-100 to-blue-100 min-h-[400px]"
+        ref={(el) => (sectionRefs.current[2] = el)}
       >
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-gray-900">Trusted by Small Businesses</h2>
