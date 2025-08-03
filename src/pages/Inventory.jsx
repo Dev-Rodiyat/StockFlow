@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { Search, X, Edit3, Trash2, FileDown, Plus, Filter, Package, AlertTriangle, CheckCircle, TrendingUp, Eye, DollarSign, Building, Tag, Calendar, Grid, List } from "lucide-react";
+import { Search, X, Edit3, Trash2, FileDown, Plus, Filter, Package, AlertTriangle, CheckCircle, TrendingUp, Eye, DollarSign, Building, Tag, Grid, List } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useInventory } from "../contexts/InventoryContext";
 import AddInventory from "../modals/AddInventory";

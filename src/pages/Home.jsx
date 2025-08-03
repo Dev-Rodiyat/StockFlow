@@ -44,7 +44,6 @@ const Home = () => {
   const sectionRefs = useRef([]);
 
   useEffect(() => {
-    console.log("Setting up IntersectionObserver for", sectionRefs.current.length, "sections");
     const observers = sectionRefs.current.map((ref, index) => {
       if (!ref) {
         console.warn(`Section ref at index ${index} is null`);
@@ -52,7 +51,6 @@ const Home = () => {
       }
       const observer = new IntersectionObserver(
         ([entry]) => {
-          console.log(`Observing section ${index}: isIntersecting = ${entry.isIntersecting}`);
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-slide-up");
             entry.target.classList.remove("opacity-0");
@@ -66,14 +64,9 @@ const Home = () => {
     });
 
     return () => {
-      console.log("Cleaning up observers");
       observers.forEach((observer) => observer && observer.disconnect());
     };
   }, []);
-
-  const handleCTAClick = (route) => {
-    console.log(`CTA clicked: Navigating to ${route}`);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50">
@@ -90,7 +83,6 @@ const Home = () => {
           <div className="flex justify-center gap-4 animate-slide-up delay-200 z-20">
             <Link
               to="/dashboard"
-              onClick={() => handleCTAClick("/dashboard")}
               className="inline-block bg-white text-blue-600 px-8 py-4 rounded-full font-semibold shadow-lg hover:bg-blue-50 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               role="button"
               aria-label="Get started with StockFlow"
@@ -99,7 +91,6 @@ const Home = () => {
             </Link>
             <Link
               to="/about"
-              onClick={() => handleCTAClick("/about")}
               className="inline-block border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
               role="button"
               aria-label="Learn more about StockFlow"
@@ -164,7 +155,6 @@ const Home = () => {
           <div className="text-center mt-12">
             <Link
               to="/inventory"
-              onClick={() => handleCTAClick("/inventory")}
               className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               role="button"
               aria-label="Try StockFlow now"

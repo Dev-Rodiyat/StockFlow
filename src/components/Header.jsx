@@ -27,11 +27,6 @@ const Header = () => {
     setIsMobileMenuOpen(prev => !prev);
   };
 
-  const handleLinkClick = (to) => {
-    navigate(to);
-    setIsMobileMenuOpen(false);
-  };
-
   const isActiveLink = (to) => {
     if (to === "/") return location.pathname === "/";
     return location.pathname.startsWith(to);
@@ -47,7 +42,6 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link 
             to="/"
             className="flex items-center space-x-3 cursor-pointer group"
@@ -63,7 +57,6 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link
@@ -80,7 +73,6 @@ const Header = () => {
                 )}
                 <span className="relative z-10">{link.label}</span>
                 
-                {/* Hover effect for inactive links */}
                 {!isActiveLink(link.to) && (
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 )}
@@ -88,7 +80,6 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMobileMenu}
             className="md:hidden relative p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
@@ -110,7 +101,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <div 
         className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
           isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'

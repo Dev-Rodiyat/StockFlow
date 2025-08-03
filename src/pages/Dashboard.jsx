@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar, Area, AreaChart } from "recharts";
-import { AlertTriangle, Boxes, CalendarClock, PackageCheck, TrendingUp, TrendingDown, DollarSign, Eye, Filter, RefreshCw, Download, ArrowUpRight, ArrowDownRight, Package, Building, Tag, Clock } from "lucide-react";
+import { PieChart, Pie, Cell, Tooltip, XAxis, YAxis, CartesianGrid, ResponsiveContainer, BarChart, Bar, Area, AreaChart } from "recharts";
+import { AlertTriangle, Boxes, PackageCheck, DollarSign, Eye, RefreshCw, Download, ArrowUpRight, ArrowDownRight, Package, Building, Tag, Clock } from "lucide-react";
 import { useInventory } from '../contexts/InventoryContext';
 import { Link } from "react-router-dom";
 
@@ -9,21 +9,18 @@ const Dashboard = () => {
     const [selectedPeriod, setSelectedPeriod] = useState("30d");
     const [selectedMetric, setSelectedMetric] = useState("quantity");
 
-    // Metrics calculations
     const totalItems = items.length;
     const totalQuantity = items.reduce((acc, item) => acc + Number(item.quantity || 0), 0);
     const totalValue = items.reduce((acc, item) => acc + (Number(item.quantity || 0) * Number(item.price || 0)), 0);
     const lowStockItems = items.filter(item => Number(item.quantity || 0) <= (item.minStockLevel || 5));
     const criticalStockItems = items.filter(item => Number(item.quantity || 0) <= 2);
 
-    // Recent items (sorted by createdAt)
     const recentItems = useMemo(() => {
         return [...items]
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .slice(0, 5);
     }, [items]);
 
-    // Category data for bar chart
     const categoryData = useMemo(() => {
         const data = items.reduce((acc, item) => {
             const category = item.category || "Uncategorized";
@@ -38,14 +35,12 @@ const Dashboard = () => {
         return Object.values(data);
     }, [items]);
 
-    // Stock status data for pie chart
     const stockStatusData = useMemo(() => [
         { name: "In Stock", value: items.filter(item => Number(item.quantity || 0) > (item.minStockLevel || 5)).length, color: "#10b981" },
         { name: "Low Stock", value: items.filter(item => Number(item.quantity || 0) <= (item.minStockLevel || 5) && Number(item.quantity || 0) > 2).length, color: "#f59e0b" },
         { name: "Critical", value: criticalStockItems.length, color: "#ef4444" },
     ], [items, criticalStockItems]);
 
-    // Supplier data for top suppliers
     const topSuppliers = useMemo(() => {
         const data = items.reduce((acc, item) => {
             const supplier = item.supplier || "Unknown";
@@ -61,7 +56,6 @@ const Dashboard = () => {
             .slice(0, 5);
     }, [items]);
 
-    // Mock trend data (fallback, since context doesn't store historical data)
     const trendData = [
         { date: "Jul 01", quantity: 45, value: 12400, items: 18 },
         { date: "Jul 05", quantity: 52, value: 14200, items: 19 },
@@ -70,8 +64,6 @@ const Dashboard = () => {
         { date: "Jul 20", quantity: 58, value: 15900, items: 22 },
         { date: "Jul 25", quantity: 61, value: 17200, items: 23 },
     ];
-
-    const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4", "#84cc16", "#f97316"];
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('en-US', {

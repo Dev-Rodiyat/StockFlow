@@ -30,7 +30,6 @@ const About = () => {
   const sectionRefs = useRef([]);
 
   useEffect(() => {
-    console.log("Setting up IntersectionObserver for", sectionRefs.current.length, "sections");
     const observers = sectionRefs.current.map((ref, index) => {
       if (!ref) {
         console.warn(`Section ref at index ${index} is null`);
@@ -38,7 +37,6 @@ const About = () => {
       }
       const observer = new IntersectionObserver(
         ([entry]) => {
-          console.log(`Observing section ${index}: isIntersecting = ${entry.isIntersecting}`);
           if (entry.isIntersecting) {
             const content = ref.querySelector(".content");
             if (content) {
@@ -55,14 +53,13 @@ const About = () => {
     });
 
     return () => {
-      console.log("Cleaning up observers");
       observers.forEach((observer) => observer && observer.disconnect());
     };
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 pt-16">
-      {/* About Intro */}
+
       <section className="relative py-20 overflow-hidden" ref={(el) => (sectionRefs.current[0] = el)}>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 backdrop-blur-sm z-0 pointer-events-none"></div>
         <div className="relative max-w-6xl mx-auto px-4 text-center z-10">
@@ -83,7 +80,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Why We Built This */}
       <section
         className="py-20 bg-gradient-to-b from-gray-100 to-blue-100 min-h-[300px]"
         ref={(el) => (sectionRefs.current[1] = el)}
@@ -98,7 +94,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Features */}
       <section
         className="py-20 min-h-[400px]"
         ref={(el) => (sectionRefs.current[2] = el)}
@@ -121,7 +116,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission */}
       <section
         className="py-20 bg-gradient-to-b from-gray-100 to-blue-100 min-h-[300px]"
         ref={(el) => (sectionRefs.current[3] = el)}
@@ -136,7 +130,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* FAQ */}
       <section
         className="py-20 min-h-[300px]"
         ref={(el) => (sectionRefs.current[4] = el)}

@@ -12,10 +12,8 @@ const InventoryDetails = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-    // Find item by ID
     const item = items.find((item) => item.id === id);
 
-    // Handle case where item is not found
     if (!item) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
@@ -88,7 +86,6 @@ const InventoryDetails = () => {
         `}
             </style>
             <div className="max-w-6xl mx-auto px-4 py-8">
-                {/* Navigation Header */}
                 <div className="mb-8 no-print">
                     <button
                         onClick={() => navigate("/inventory")}
@@ -102,9 +99,7 @@ const InventoryDetails = () => {
                     </button>
                 </div>
 
-                {/* Main Content Card */}
                 <div className="bg-white/70 backdrop-blur-sm border border-white/50 shadow-xl rounded-3xl overflow-hidden printable-content">
-                    {/* Header Section */}
                     <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 text-white header-section">
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
                         <div className="relative flex justify-between items-start">
@@ -150,9 +145,7 @@ const InventoryDetails = () => {
                         </div>
                     </div>
 
-                    {/* Content Section */}
                     <div className="p-8">
-                        {/* Key Metrics Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             <div className={`p-6 rounded-2xl border-2 ${stockStatus.bgColor} ${stockStatus.borderColor} hover:shadow-lg transition-all duration-200`}>
                                 <div className="flex items-center justify-between mb-3">
@@ -185,7 +178,6 @@ const InventoryDetails = () => {
                             </div>
                         </div>
 
-                        {/* Details Grid */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div className="space-y-6">
                                 <div className="p-6 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border border-slate-200">
@@ -230,7 +222,6 @@ const InventoryDetails = () => {
                             </div>
                         </div>
 
-                        {/* Action Buttons */}
                         <div className="flex gap-4 mt-8 pt-6 border-t border-slate-200 no-print">
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
@@ -251,7 +242,6 @@ const InventoryDetails = () => {
                     </div>
                 </div>
 
-                {/* Modals */}
                 <EditInventory
                     isOpen={isEditModalOpen}
                     onClose={() => setIsEditModalOpen(false)}

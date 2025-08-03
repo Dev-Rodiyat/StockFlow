@@ -66,11 +66,10 @@ const AddInventory = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      // Convert form data to match InventoryContext item structure
       const newItem = {
-        id: uuidv4(), // Generate unique ID
+        id: uuidv4(),
         name: form.name,
-        sku: form.sku || `SKU-${Date.now()}`, // Fallback SKU
+        sku: form.sku || `SKU-${Date.now()}`,
         quantity: parseInt(form.quantity),
         minStockLevel: parseInt(form.minStockLevel),
         category: form.category,
@@ -81,7 +80,7 @@ const AddInventory = ({ isOpen, onClose }) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         expiryDate: form.expiryDate || "",
-        image: form.image ? URL.createObjectURL(form.image) : null, // Convert File to URL
+        image: form.image ? URL.createObjectURL(form.image) : null,
       };
 
       await addItem(newItem);
@@ -113,7 +112,7 @@ const AddInventory = ({ isOpen, onClose }) => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      if (file.size > 5 * 1024 * 1024) {
         setErrors({ ...errors, image: "Image size must be under 5MB" });
         return;
       }
@@ -127,7 +126,7 @@ const AddInventory = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-        {/* Header */}
+
         <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 p-6 text-white">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
           <div className="relative flex items-center justify-between">
@@ -151,10 +150,9 @@ const AddInventory = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Form Content */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6">
           <div className="space-y-6">
-            {/* Basic Information */}
+
             <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl p-6 border border-slate-200">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
                 <FileText size={20} className="text-blue-600" />
@@ -252,7 +250,7 @@ const AddInventory = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-            {/* Inventory Details */}
+
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
                 <Package size={20} className="text-green-600" />
@@ -324,7 +322,7 @@ const AddInventory = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-            {/* Financial Information */}
+
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
                 <DollarSign size={20} className="text-purple-600" />
@@ -375,7 +373,7 @@ const AddInventory = ({ isOpen, onClose }) => {
                 </div>
               </div>
             </div>
-            {/* Additional Information */}
+
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
               <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
                 <FileText size={20} className="text-amber-600" />
