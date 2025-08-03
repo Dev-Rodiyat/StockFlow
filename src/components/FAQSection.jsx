@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "Is the app free to use?",
     answer:
-      "The app offers a free trial, with premium features available for a subscription fee.",
+      "Yes, all features of this app is free and accessible to all user.",
   },
   {
     question: "What platforms does the app support?",
@@ -24,7 +24,7 @@ const faqs = [
   {
     question: "How can I get started with the app?",
     answer:
-      "Sign up for a free trial, create your account, and start adding your inventory items.",
+      "Add your inventories, and start managing it seamlessly.",
   },
 ];
 

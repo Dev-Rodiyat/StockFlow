@@ -1,38 +1,57 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { debounce } from 'lodash';
 
 const InventoryContext = createContext();
 
-export const useInventory = () => useContext(InventoryContext);
+export const useInventory = () => {
+    const context = useContext(InventoryContext);
+    if (!context) {
+        throw new Error('useInventory must be used within an InventoryProvider');
+    }
+    return context;
+};
 
 const getInitialInventory = () => {
-    const stored = localStorage.getItem("inventoryItems");
-    return stored ? JSON.parse(stored) : [];
+    try {
+        const stored = localStorage.getItem('inventoryItems');
+        return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+        console.error('Failed to parse inventory from localStorage:', error);
+        return [];
+    }
 };
 
 export const InventoryProvider = ({ children }) => {
     const [items, setItems] = useState(getInitialInventory);
 
+    const saveToLocalStorage = debounce((items) => {
+        try {
+            localStorage.setItem('inventoryItems', JSON.stringify(items));
+        } catch (error) {
+            console.error('Failed to save to localStorage:', error);
+        }
+    }, 300);
+
     useEffect(() => {
-        localStorage.setItem("inventoryItems", JSON.stringify(items));
+        saveToLocalStorage(items);
     }, [items]);
 
     const addItem = (item) => {
-        const timestamp = Date.now();
+        if (!item.name || item.price < 0 || item.quantity < 0) {
+            throw new Error('Invalid item: name is required, price and quantity must be non-negative');
+        }
         setItems((prev) => [
             ...prev,
-            { ...item, id: timestamp.toString(), createdAt: timestamp },
+            { ...item, id: uuidv4(), createdAt: Date.now() },
         ]);
     };
 
     const updateItem = (id, updatedItem) => {
         setItems((prev) =>
-            prev.map((item) => (item.id === id ? { ...item, ...updatedItem } : item))
-        );
-    };
-
-    const editItem = (updatedItem) => {
-        setItems((prev) =>
-            prev.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+            prev.map((item) =>
+                item.id === id ? { ...item, ...updatedItem, id } : item
+            )
         );
     };
 
@@ -41,7 +60,9 @@ export const InventoryProvider = ({ children }) => {
     };
 
     const clearAll = () => {
-        setItems([]);
+        if (window.confirm('Are you sure you want to delete all items?')) {
+            setItems([]);
+        }
     };
 
     const getItemById = (id) => {
@@ -54,10 +75,9 @@ export const InventoryProvider = ({ children }) => {
                 items,
                 addItem,
                 updateItem,
-                editItem,
                 deleteItem,
                 clearAll,
-                getItemById
+                getItemById,
             }}
         >
             {children}

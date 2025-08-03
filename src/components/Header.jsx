@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { Menu, X, Package } from "lucide-react";
 
 const navLinks = [
@@ -11,7 +12,8 @@ const navLinks = [
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState("/");
+  const location = useLocation();
+  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,30 +23,42 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      mobileMenuRef.current?.focus();
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isMobileMenuOpen]);
+
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prev => !prev);
+    setIsMobileMenuOpen((prev) => {
+      console.log(`Mobile menu toggled: ${!prev}`);
+      return !prev;
+    });
   };
 
-  const handleLinkClick = (to) => {
-    setActiveLink(to);
-    setIsMobileMenuOpen(false);
+  const isActiveLink = (linkTo) => {
+    if (linkTo === "/") return location.pathname === "/";
+    return location.pathname.startsWith(linkTo);
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 w-full z-50 transition-all duration-500 ease-out ${
-        isScrolled 
-          ? 'bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-xl shadow-black/5' 
-          : 'bg-white/95 backdrop-blur-sm border-b border-gray-100/50'
+        isScrolled
+          ? "bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-xl shadow-black/5"
+          : "bg-white/95 backdrop-blur-sm border-b border-gray-100/50"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div 
-            onClick={() => handleLinkClick("/")}
-            className="flex items-center space-x-3 cursor-pointer group"
-          >
+          <NavLink to="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
               <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
@@ -54,49 +68,50 @@ const Header = () => {
             <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
               StockFlow
             </span>
-          </div>
+          </NavLink>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
-              <button
+              <NavLink
                 key={link.to}
-                onClick={() => handleLinkClick(link.to)}
-                className={`relative px-4 py-2 rounded-full font-medium transition-all duration-300 ease-out ${
-                  activeLink === link.to
-                    ? "text-white shadow-lg shadow-blue-500/25"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+                to={link.to}
+                className={({ isActive }) =>
+                  `relative px-4 py-2 rounded-full font-medium transition-all duration-300 ease-out ${
+                    isActiveLink(link.to)
+                      ? "text-white shadow-lg shadow-blue-500/25"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`
+                }
               >
-                {activeLink === link.to && (
+                {isActiveLink(link.to) && (
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full transform transition-transform duration-300 ease-out"></div>
                 )}
                 <span className="relative z-10">{link.label}</span>
-                
-                {/* Hover effect for inactive links */}
-                {activeLink !== link.to && (
+                {!isActiveLink(link.to) && (
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 )}
-              </button>
+              </NavLink>
             ))}
           </nav>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden relative p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            aria-label="Toggle navigation menu"
+            className="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             <div className="relative w-6 h-6">
-              <Menu 
+              <Menu
                 className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-0 rotate-90' : 'opacity-100 rotate-0'
-                }`} 
+                  isMobileMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                }`}
               />
-              <X 
+              <X
                 className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-90'
-                }`} 
+                  isMobileMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+                }`}
               />
             </div>
           </button>
@@ -104,33 +119,43 @@ const Header = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div 
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
-          isMobileMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
+      <div
+        className={`md:hidden transition-all duration-500 ease-out ${
+          isMobileMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-full opacity-0"
         }`}
+        ref={mobileMenuRef}
+        tabIndex={-1}
       >
-        <div className="bg-white/95 backdrop-blur-xl border-t border-gray-100/50">
-          <nav className="px-6 py-4 space-y-1">
+        <div className="bg-white/70 backdrop-blur-md border-t border-gray-100/50 py-4">
+          <nav className="px-4 sm:px-6 space-y-2">
             {navLinks.map((link, index) => (
-              <button
+              <NavLink
                 key={link.to}
-                onClick={() => handleLinkClick(link.to)}
-                className={`w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-300 ease-out transform ${
-                  activeLink === link.to
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02]"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:scale-[1.01]"
-                }`}
+                to={link.to}
+                onClick={() => {
+                  console.log(`NavLink clicked: ${link.label}`);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={({ isActive }) =>
+                  `block px-4 py-3 rounded-xl font-medium transition-all duration-300 ease-out ${
+                    isActiveLink(link.to)
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/80 hover:shadow-md"
+                  }`
+                }
                 style={{
-                  transitionDelay: isMobileMenuOpen ? `${index * 50}ms` : '0ms'
+                  transitionDelay: isMobileMenuOpen ? `${index * 100}ms` : "0ms",
                 }}
               >
                 <div className="flex items-center justify-between">
                   <span>{link.label}</span>
-                  {activeLink === link.to && (
+                  {isActiveLink(link.to) && (
                     <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                   )}
                 </div>
-              </button>
+              </NavLink>
             ))}
           </nav>
         </div>
