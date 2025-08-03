@@ -1,97 +1,168 @@
-# 🌍 HiTranslate
+# 📦 StockFlow — Business Inventory Manager
 
-HiTranslate is a modern, voice-powered language translator app that lets users **speak**, **see**, and **hear** translations in real-time. Built for language learners, travelers, and multilingual teams, the app supports voice input, history tracking, and text-to-speech — all with a sleek, responsive interface and dark mode support.
-
----
-
-## ✨ Features
-
-* 🎤 **Speech-to-Text Input** – Speak instead of typing
-* 📝 **Text Translation** – Translate typed text between many languages
-* 🔊 **Text-to-Speech Output** – Hear translated content with natural-sounding voices
-* 📜 **Translation History** – View, search, and replay previous translations
-* 🌐 **Flag Icons** – Visual language identification with country flags
-* 🌓 **Light/Dark Mode** – Elegant UI that adapts to your theme
-* 📥 **Download History** – Export translation history as a `.txt` file
-* ⏯️ **Control Buttons** – Pause/resume/stop for audio playback
+**StockFlow** is a modern and user-friendly inventory management system designed to help businesses efficiently track and manage stock, monitor item trends, and keep records up-to-date. Built with React, Tailwind CSS, and local state management via Context API, StockFlow is lightweight yet feature-rich.
 
 ---
 
-## 🚀 Technologies Used
+## 🔍 Features
 
-* **React + Vite** – Frontend framework & dev environment
-* **Tailwind CSS** – Utility-first styling
-* **Framer Motion** – Seamless animations and transitions
-* **React Router** – Client-side routing
-* **Rapid API / Translation API** – Language translation and speech features
+* ✅ **Dashboard Overview**
+  Real-time visualizations of total items, stock levels, monthly additions, and low-stock alerts.
+
+* 📊 **Analytics & Charts**
+  Pie and Line charts for visual representation of quantity distribution and inventory growth over time.
+
+* 📋 **Inventory Listing**
+  Interactive table view of all inventory with:
+
+  * Search and clear functionality
+  * Filter by date, category and stock status
+  * Edit/Delete actions
+  * Export to PDF
+
+* ➕ **Add, Edit & Delete Items**
+  Seamless modals for managing inventory records.
+
+* 🧾 **Detailed Inventory View**
+  Full-page view showing all item information, queried directly by ID.
+
+* 💾 **Local Persistence**
+  Items are stored using `localStorage` to maintain data across sessions without a backend.
+
+  ## ✨ Features
+
+### 📊 **Core Functionality**
+- **Real-time Inventory Tracking** - Monitor stock levels, movements, and updates instantly
+- **Smart Dashboard** - Comprehensive overview with analytics and key metrics
+- **Product Management** - Add, edit, and organize inventory items with ease
+- **Stock Alerts** - Automated notifications for low stock and reorder points
+- **Search & Filter** - Advanced filtering and search capabilities
+
+### 🎨 **Modern User Experience**
+- **Responsive Design** - Seamless experience across desktop, tablet, and mobile
+- **Glassmorphism UI** - Contemporary design with backdrop blur effects
+- **Smooth Animations** - Micro-interactions and transitions for enhanced UX
+- **Intuitive Navigation** - Clean, modern header with mobile-first approach
+
+### 🔧 **Technical Excellence**
+- **Fast Performance** - Built with Vite for lightning-fast development and builds
+- **Type Safety** - Full TypeScript support for robust code quality
+- **Modern CSS** - Tailwind CSS for maintainable and scalable styling
+- **Component Architecture** - Modular, reusable React components
+- **State Management** - Efficient state handling with contextAPI (useContext)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+* Node.js ≥ 14.x
+* npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/Dev-Rodiyat/StockFlow.git
+cd StockFlow
+npm install
+```
+
+### Run Locally
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+---
+
+## 🛠️ Tech Stack
+
+* **React** – Frontend framework
+* **Tailwind CSS** – Styling
+* **Recharts** – Data visualization (charts)
+* **Lucide-react** – Icons
+* **date-fns** – Date formatting
+* **Context API** – State management
+
+---
+
+## 🖼️ Screenshots
+
+| Dashboard               | Inventory Page            | Item Details            |
+| ----------------------- | ------------------------- | ----------------------- |
+| ![Dashboard](image.png) | ![Inventory](image-1.png) | ![Details](image-2.png) |
 
 ---
 
 ## 📁 Project Structure
 
-```
-src/
-├── components/        # Reusable components (e.g., Footer, Header, FlagIcon)
-├── pages/             # Page-level components (Home, Translate, History, About)
-├── hooks/             # Custom hooks for voice & translation logic
-├── assets/            # Images, flag icons, etc.
-├── App.jsx            # Root component
-└── main.jsx           # Entry point
-```
-
----
-
-## 📸 Screenshots
-
-> ![Translation Light Mode UI](image.png) ![Translation Dark Mode UI](image-1.png)
-
----
-
-## ⚙️ Getting Started
-
-1. **Clone the repository:**
-
 ```bash
-git clone https://github.com/Dev-Rodiyat/HiTranslate.git
-cd HiTranslate
-```
-
-2. **Install dependencies:**
-
-```bash
-npm install
-```
-
-3. **Run the app locally:**
-
-```bash
-npm run dev
+stockflow/
+├── src/
+│   ├── components/                # Reusable UI components
+│   │   ├── Header/                # Navigation header
+│   │   ├── Footer/            
+│   │   └── Layout/             
+│   ├── pages/                     # Route pages
+│   │   ├── Home/                 
+│   │   ├── About/                
+│   │   ├── Dashboard/             # Dashboard components
+│   │   ├── Inventory/             # Inventory management
+│   │   └── InventoryDetails/      # Inventory details
+│   ├── contexts/                  # contextAPI for state management
+│   ├── modals/                    # CRUD operation modals
+│   └── styles/                    # Global styles
+├── public/                        # Static assets
+└── docs/                          # Documentation
 ```
 
 ---
 
-## 📄 Available Scripts
+## 🎯 Roadmap
 
-* `npm run dev` – Run the app in development
-* `npm run build` – Build for production
-* `npm run preview` – Preview the production build
+### Phase 1 - Core Features ✅
+- [x] Modern responsive header
+- [x] Basic inventory management
+- [x] Dashboard overview
+- [x] Mobile navigation
+
+### Phase 2 - Enhanced Features 🚧
+- [ ] Advanced analytics dashboard
+- [ ] Barcode scanning integration
+- [ ] Export/Import functionality
+- [ ] Multi-location support
+
+### Phase 3 - Advanced Features 📋
+- [ ] API integration
+- [ ] User authentication
+- [ ] Role-based permissions
+- [ ] Real-time notifications
+- [ ] Advanced reporting
+
+## 📦 Future Improvements
+
+* 🔐 Authentication & role-based access
+* 🌐 Backend & database integration
+* 🧮 Bulk import/export (CSV, Excel)
+* 📈 More detailed analytics and reports
 
 ---
 
-## 🙋‍♀️ FAQ
+## 🙏 Acknowledgments
 
-* **Is it free?**
-  Yes! All features are free to use.
+- Thanks to the React team for the amazing framework
+- Tailwind CSS for making styling enjoyable
+- Lucide for the beautiful icon set
+- The open-source community for inspiration and support
 
-* **Is history stored online?**
-  No, all data is stored locally in your browser.
-
-* **Does it support offline translation?**
-  No, an internet connection is required for translation and voice features.
 
 ---
 
-## 📫 Contact
+## 👨‍💻 Author
 
-Built with ❤️ by \[Rodiyat Olajide]
-Feel free to reach out for collaboration or questions.
+**\[Rodiyat Olajide]**
+Full-Stack web developer
+[X](x.com/Dev_Rodiyat) | [LinkedIn](https://www.linkedin.com/in/rodiyat-olajide-71b737329/)
